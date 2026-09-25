@@ -220,9 +220,7 @@ public class PlayerService {
 					Player player = candidates.get(i);
 
 					System.out.println(
-							(i + 1) + ". " + player.getName() +
-									" OVR:" +
-									player.getOverall());
+							(i + 1) + ". " + player.getName() + " OVR:" + player.getOverall());
 				}
 
 				System.out.print("番号: ");

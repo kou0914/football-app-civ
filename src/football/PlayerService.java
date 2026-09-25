@@ -13,10 +13,10 @@ import java.util.Scanner;
 
 public class PlayerService {
 
-	private ArrayList<Player> players;
-	private ArrayList<Player> squad;
-	private String teamName;
-	private Scanner scanner;
+	ArrayList<Player> players;
+	ArrayList<Player> squad;
+	String teamName;
+	Scanner scanner;
 
 	public PlayerService(ArrayList<Player> players) {
 		this.players = players;
@@ -37,8 +37,7 @@ public class PlayerService {
 			int age = Integer.parseInt(scanner.nextLine());
 
 			if (age < 0 || age > 50) {
-				throw new InvalidAgeException(
-						"年齢は0〜50歳で入力してください。");
+				throw new InvalidAgeException("年齢は0〜50歳で入力してください。");
 			}
 
 			System.out.print("背番号: ");
@@ -50,13 +49,7 @@ public class PlayerService {
 			System.out.print("チーム: ");
 			String team = scanner.nextLine();
 
-			Player player = new Player(
-					overall,
-					name,
-					age,
-					number,
-					position,
-					team);
+			Player player = new Player(overall, name, age, number, position, team);
 
 			players.add(player);
 
@@ -83,6 +76,8 @@ public class PlayerService {
 
 		for (Player player : players) {
 			player.profile();
+
+			System.out.println("-----------------");
 		}
 	}
 
@@ -116,22 +111,22 @@ public class PlayerService {
 			if (player.getName().equals(name)) {
 
 				try {
-					System.out.print("新しい総合値: ");
+					System.out.print("総合値: ");
 					player.setOverall(
 							Integer.parseInt(scanner.nextLine()));
 
-					System.out.print("新しい年齢: ");
+					System.out.print("年齢: ");
 					int age = Integer.parseInt(scanner.nextLine());
 					player.setAge(age);
 
-					System.out.print("新しい背番号: ");
+					System.out.print("背番号: ");
 					player.setNumber(
 							Integer.parseInt(scanner.nextLine()));
 
-					System.out.print("新しいポジション: ");
+					System.out.print("ポジション: ");
 					player.setPosition(scanner.nextLine());
 
-					System.out.print("新しいチーム: ");
+					System.out.print("チーム: ");
 					player.setTeam(scanner.nextLine());
 
 					saveCsv();
@@ -196,19 +191,7 @@ public class PlayerService {
 			break;
 		}
 
-		String[] positions = {
-				"GK",
-				"RSB",
-				"CB",
-				"CB",
-				"LSB",
-				"MF",
-				"MF",
-				"MF",
-				"RWG",
-				"CF",
-				"LWG"
-		};
+		String[] positions = { "GK", "RSB", "CB", "CB", "LSB", "MF", "MF", "MF", "RWG", "CF", "LWG" };
 
 		System.out.println("\n===== スカッド作成 =====");
 
@@ -258,8 +241,7 @@ public class PlayerService {
 
 					squad.add(selected);
 
-					System.out.println(
-							selected.getName() + "を選択しました。");
+					System.out.println(selected.getName() + "を選択しました。");
 
 					break;
 
@@ -275,13 +257,7 @@ public class PlayerService {
 
 		for (Player player : squad) {
 
-			System.out.println(
-					player.getPosition() +
-							" | " +
-							player.getName() +
-							" | OVR " +
-							player.getOverall());
-
+			System.out.println(player.getPosition() + " | " + player.getName() + " | 総合値 " + player.getOverall());
 			total += player.getOverall();
 		}
 
@@ -296,8 +272,7 @@ public class PlayerService {
 				PrintWriter writer = new PrintWriter(
 						new FileWriter("players.csv"))) {
 
-			writer.println(
-					"overall,name,age,number,position,team");
+			writer.println("overall,name,age,number,position,team");
 
 			for (Player player : players) {
 
@@ -324,8 +299,7 @@ public class PlayerService {
 		}
 
 		try (
-				BufferedReader reader = new BufferedReader(
-						new FileReader(file))) {
+				BufferedReader reader = new BufferedReader(new FileReader(file))) {
 
 			String line;
 
@@ -348,13 +322,7 @@ public class PlayerService {
 				String position = data[4];
 				String team = data[5];
 
-				Player player = new Player(
-						overall,
-						name,
-						age,
-						number,
-						position,
-						team);
+				Player player = new Player(overall, name, age, number, position, team);
 
 				players.add(player);
 			}
@@ -374,16 +342,8 @@ public class PlayerService {
 			return;
 		}
 
-		String[] enemyTeams = {
-				"Barcelona",
-				"Real Madrid",
-				"Manchester City",
-				"Liverpool",
-				"Bayern Munich",
-				"PSG",
-				"Inter",
-				"Arsenal"
-		};
+		String[] enemyTeams = { "Barcelona", "Real Madrid", "Manchester City", "Liverpool", "Bayern Munich", "PSG",
+				"Inter", "Arsenal" };
 
 		Random random = new Random();
 
@@ -397,19 +357,7 @@ public class PlayerService {
 
 		int enemyTotal = 0;
 
-		String[] positions = {
-				"GK",
-				"RSB",
-				"CB",
-				"CB",
-				"LSB",
-				"MF",
-				"MF",
-				"MF",
-				"RWG",
-				"CF",
-				"LWG"
-		};
+		String[] positions = { "GK", "RSB", "CB", "CB", "LSB", "MF", "MF", "MF", "RWG", "CF", "LWG" };
 
 		System.out.println("\n===== TEAM BATTLE =====");
 
@@ -422,8 +370,7 @@ public class PlayerService {
 
 			for (Player player : players) {
 
-				if (player.getPosition()
-						.equalsIgnoreCase(position)) {
+				if (player.getPosition().equalsIgnoreCase(position)) {
 
 					candidates.add(player);
 				}
@@ -431,28 +378,23 @@ public class PlayerService {
 
 			if (!candidates.isEmpty()) {
 
-				Player enemy = candidates.get(
-						random.nextInt(candidates.size()));
+				Player enemy = candidates.get(random.nextInt(candidates.size()));
 
 				enemyTotal += enemy.getOverall();
 			}
 		}
 
-		System.out.println(
-				teamName + ": " + myTotal);
+		System.out.println(teamName + ": " + myTotal);
 
-		System.out.println(
-				enemyTeam + ": " + enemyTotal);
+		System.out.println(enemyTeam + ": " + enemyTotal);
 
 		if (myTotal > enemyTotal) {
 
-			System.out.println(
-					teamName + "の総合値が高いです。");
+			System.out.println(teamName + "の勝ち");
 
 		} else if (myTotal < enemyTotal) {
 
-			System.out.println(
-					enemyTeam + "の総合値が高いです。");
+			System.out.println(enemyTeam + "の勝ち");
 
 		} else {
 

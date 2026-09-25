@@ -68,17 +68,13 @@ public class Fifa {
 				break;
 
 			case "0":
-
-				System.out.println(
-						"アプリを終了します。");
+				System.out.println("アプリを終了します。");
 
 				scanner.close();
 				return;
 
 			default:
-
-				System.out.println(
-						"正しい番号を入力してください。");
+				System.out.println("正しい番号を入力してください。");
 			}
 		}
 	}
